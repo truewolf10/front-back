@@ -1,0 +1,97 @@
+<script src="https://code.angularjs.org/1.7.2/angular.js"></script>
+<script src='checklist-model.js'></script>
+<div class="p-3" xmlns="">
+  <!--Modal PopUp Phase -->
+  <button type="button" class="btn btn-primary bg-2 mb-3  float-right" (click)="openModal(template);checkboxFalse();" *ngIf="userRole.toString() =='PROJECT_MANAGER' && userRole.toString() == 'USER' || userRole.toString() == 'ADMIN'" >Create a new Phase</button>
+
+  <ng-template #template >
+    <div class="modal-header bg-2 ">
+      <h4 class="modal-title pull-left">Create a phase </h4>
+      <button type="button" class="close pull-right text-light" aria-label="Close" (click)="modalRef.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+
+    <div class="modal-body bg-1">
+      <!--Button and TextForm for create a phase-->
+        <input [(ngModel)]="phasesName" class="textBoxModal input-1"  placeholder="Enter the name of phase : " type="text">
+        <br>
+        <textarea rows="3px" cols="55px" [(ngModel)] = "phaseDescription" class = "input-1" placeholder="Enter the description: " type="text" required></textarea>
+      <!--Checbox din butonul Create a new phase-->
+      <li *ngFor="let template of templates; let i = index">
+          <mat-checkbox class="text-dark"
+                        [indeterminate]=""
+                        labelPosition="after"
+                        color="primary"
+                        [checked]="templateChecked.get(template.id)"
+                        (change)="changeCheckbox(template)">
+            {{i}}.{{template.name}}
+          </mat-checkbox>
+      </li>
+
+      <div class="ml-3" >
+        <button class="btn btn-success bg-2  createPhaseWithTemplate" (click)="add()">Create</button>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <table >
+    <tr class="text-light bg-dark" bgcolor="#273c42">
+      <th>ID</th>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let phase of phases; let i = index">
+      <td >{{i}}</td>
+      <td>{{phase.name}}</td>
+      <td>
+        <span type="text" max="25" id="hoverDescription" placement="bottom" ngbPopover="{{phase.description}}" triggers="mouseenter:mouseleave" popoverTitle="Description">
+          {{phase.description}}
+        </span>
+      </td>
+      <td><!--Delete-->
+        <span *ngIf="userRole.toString() =='PROJECT_MANAGER' && userRole.toString() == 'USER' || userRole.toString() == 'ADMIN'">
+        <button class="btn bg-transparent float-right "  (click)="delete(phase)">Delete</button>
+
+        <!--Modal pt EachPhaseEdit-->
+        <button type="button" class="btn bg-transparent float-right " (click)="checkCheckbox(phase.id);openModal(EditForEachPhase);" >Edit</button>
+        </span>
+        <ng-template #EditForEachPhase >
+          <div class="modal-header bg-2 ">
+            <h4 class="modal-title pull-left">Edit the phase</h4>
+            <button type="button" class="close pull-right text-light" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body bg-1 ">
+            <!--Button and TextForm for Edit a phase-->
+              <input [(ngModel)]="phase.name" class="input-1 text-dark textBoxModal"  type="text" placeholder={{phase.name}} >
+              <br>
+              <textarea rows="3px" cols="55px" [(ngModel)] = "phase.description" class = "input-1" placeholder="Enter the description: " type="text" required></textarea>
+              <br>
+              <li *ngFor="let template of templates; let i = index">
+                <mat-checkbox class="text-dark"
+                              [indeterminate]=""
+                              labelPosition="after"
+                              color="primary"
+                              [checked]="templateChecked.get(template.id)"
+                              (change)="changeCheckbox(template)">
+                  {{i}}.{{template.name}}
+                </mat-checkbox>
+              </li>
+
+
+              <button class="btn btn-success bg-2 templateAddToPhase" (click)="update(phase)" >Edit</button>
+
+          </div>
+        </ng-template>
+      </td>
+    </tr>
+  </table>
+  <br>
+</div>
+
+
+
+

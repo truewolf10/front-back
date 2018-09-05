@@ -1,0 +1,49 @@
+.bg-1{
+  background-color: #DCDCDC; /* Dark Blue */
+  color: #ffffff;
+}
+
+.bg-2{
+  background-color: #273c42; /* Grey */
+  color: #ffffff;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+.input-1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.textBoxModal{ /*Edit textbox "enter the name of project phase*/
+  width: 460px;
+  height: 40px;
+}
+
+.btnCreatePhase{ /*Edit btnBox Create of Modal*/
+  width: 140px;
+  height: 40px;
+}
+
+#createButton {
+  background-color: #273c42;
+  color : #ffffff;
+}
+
+#hoverDescription{
+  display:block;
+  text-overflow: ellipsis;
+  width: 600px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+

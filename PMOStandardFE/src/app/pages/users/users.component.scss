@@ -1,0 +1,40 @@
+.btn-1 {
+  width: 140px;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.modal-header {
+  background-color: #273c42;
+  color: #ffffff;
+}
+
+.bg-1{
+  background-color: #DCDCDC; /* Dark Blue */
+  color: #ffffff;
+}
+
+.bg-2{
+  background-color: #273c42; /* Grey */
+  color: #ffffff;
+}
+
+.input-1 {
+  margin-top: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+.mat-radio-button ~ .mat-radio-button {
+  padding-right: 16px;
+}

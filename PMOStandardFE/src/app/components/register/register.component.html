@@ -1,0 +1,107 @@
+<!--<div class="p-4">-->
+  <!--<h4>Register:</h4>-->
+
+  <!--<input class="input-1" [(ngModel)]="firstName" type="text" placeholder="first name">-->
+  <!--<br>-->
+  <!--<input class="input-1" [(ngModel)]="lastName" type="text" placeholder="last name">-->
+  <!--<br>-->
+  <!--<input class="input-1" [(ngModel)]="email" type="text" placeholder="email">-->
+  <!--<br>-->
+  <!--<input class="input-1" [(ngModel)]="password" type="password" placeholder="password">-->
+  <!--<br>-->
+  <!--<h5 class="mt-3">Business Unit:</h5>-->
+  <!--<fieldset id="UnitRadioBox">-->
+    <!--<div class="ml-3" *ngFor="let unit of units; let i = index">-->
+      <!--<mat-radio-button name="UnitRadioBox" color="primary" (change)="selectCheckbox(unit)">{{unit}}</mat-radio-button>-->
+      <!--<br>-->
+    <!--</div>-->
+  <!--</fieldset>-->
+  <!--<script>-->
+    <!--function init()-->
+    <!--{-->
+      <!--window.location.href = "www.wherever.com";-->
+    <!--}-->
+  <!--</script>-->
+
+  <!--<button onload="init()" type="button" class="btn bg-2 mt-4" onClick="window.location.href=window.location.href" (click)="add()">Register</button>-->
+<!--</div>-->
+
+
+
+
+
+<div class="container">
+  <div class="card card-container">
+    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+    <p id="profile-name" class="profile-name-card"></p>
+
+    <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+      <div class="alert alert-danger" role="alert" *ngIf="errorMessage">{{errorMessage}}</div>
+      <span id="reauth-email" class="reauth-email"></span>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
+        <label for="firstName">First Name</label>
+        <input type="text" class="form-control" name="firstName" id="firstName" [(ngModel)]="user.firstName" #firstName="ngModel" required />
+        <div *ngIf="f.submitted && !firstName.valid" class="help-block">The full Name is required</div>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" name="lastName" id="lastName" [(ngModel)]="user.lastName" #lastName="ngModel" required />
+        <div *ngIf="f.submitted && !lastName.valid" class="help-block">The full Name is required</div>
+      </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+        <label for="username">Email Address</label>
+        <input type="text" class="form-control" name="username" id="username" pattern="[^ @]*@[^ @]*" [(ngModel)]="user.email" #username="ngModel" required />
+        <div *ngIf="f.submitted && !username.valid" class="help-block">
+
+          <div *ngIf="username.errors.required">
+            Email is required.
+          </div>
+          <div *ngIf="username.errors.pattern">
+            A valid email address is required
+          </div>
+
+        </div>
+      </div>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" id="password"[(ngModel)]="user.password" #password="ngModel" required minlength="4" />
+        <div *ngIf="f.submitted && !password.valid" class="help-block">
+
+          <div *ngIf="password.errors.required">
+            password is required.
+          </div>
+          <div *ngIf="password.errors.minlength">
+            password must be at least 4 characters long.
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label> Business Unit: </label>
+        <fieldset id="UnitRadioBox">
+        <div class="ml-3" *ngFor="let unit of units; let i = index">
+          <mat-radio-button name="UnitRadioBox" color="primary" (change)="selectCheckbox(unit)">
+            {{unit}}
+          </mat-radio-button>
+          <br>
+        </div>
+        </fieldset>
+      </div>
+
+
+      <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Create Account</button>
+      <button [routerLink]="['/login']" class="btn btn-lg btn-danger btn-block btn-cancel" type="button">Cancel</button>
+
+    </form><!-- /form -->
+
+  </div><!-- /card-container -->
+</div><!-- /container -->
+
+
+
+
+

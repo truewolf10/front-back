@@ -1,0 +1,70 @@
+<div class="p-3">
+  <button type="button" class="btn mb-3 float-right" id="createButton" *ngIf="userRole.toString() =='PROJECT_MANAGER' || userRole.toString() == 'ADMIN'" (click)="openModal(template, true)">Create Project</button>
+
+  <table>
+    <tr class="text-light bg-dark" bgcolor="#273c42">
+      <th>Nr</th>
+      <th>Name</th>
+      <th>Size</th>
+      <th>Description</th>
+      <th></th>
+
+    </tr>
+
+    <tr *ngFor="let project of projects; let i = index">
+      <td>{{i}}</td>
+      <td>{{project.name}}</td>
+      <td>{{project.size}}</td>
+      <td>
+        <span type="text" max="25" id="hoverDescription" placement="bottom" ngbPopover="{{project.description}}" triggers="mouseenter:mouseleave" popoverTitle="Description">
+          {{project.description}}
+        </span>
+      </td>
+      <td>
+        <div *ngIf="userRole.toString() =='PROJECT_MANAGER' || userRole.toString() == 'ADMIN'">
+          <button class="btn bg-transparent float-right" (click)="delete(project)">Delete</button>
+          <button class="btn bg-transparent float-right"(click)="update(project, template, project.id)">Edit</button>
+          <button class="btn bg-transparent float-right" [routerLink] = "['/project', project.id]">View</button>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+
+  <ng-template #template>
+    <!-- Modal -->
+        <!--<div class="modal-content text-light bg-dark">-->
+          <div class="modal-header bg-2">
+            <h4 *ngIf="!isAdded" class="modal-title pull-left">Edit a project </h4>
+            <h4 *ngIf = "isAdded" class="modal-title pull-left">Create a project </h4>
+            <button type="button" class="close pull-right text-light" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span></button>
+          </div>
+
+          <div class="modal-body bg-1">
+              <input [(ngModel)] = "projectName" class="textBoxModal" placeholder="Enter the name of project:" type="text" required>
+              <br>
+              <input [(ngModel)] = "projectSize" class = "textBoxModal input-1" placeholder="Enter the size of project:" type="number" required>
+              <br>
+              <textarea  rows="3px" cols="55px" [(ngModel)] = "projectDescription" class = "input-1" placeholder="Enter the description: " type="text" required></textarea>
+
+
+            <li  *ngFor="let phase of phases; let i = index">
+              <mat-checkbox class="text-dark"
+                            [indeterminate]=""
+                            labelPosition="after"
+                            color="primary"
+                            [checked]="phasesChecked.get(phase.id)"
+                            (change)="changeCheckbox(phase)">
+                {{i}}.{{phase.name}}
+              </mat-checkbox>
+            </li>
+
+            <div class="ml-3" >
+            <button *ngIf="isAdded" class="btn btn-success bg-2"  (click)="add()">Create</button>
+            <button *ngIf="!isAdded" class="btn btn-success bg-2"  (click)="add()">Update</button>
+
+            </div>
+          </div>
+  </ng-template>
+</div>

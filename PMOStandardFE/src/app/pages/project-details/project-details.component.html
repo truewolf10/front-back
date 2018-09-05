@@ -1,0 +1,80 @@
+<div   *ngIf="project">
+  <div class=" row mt-5 h1 card">
+    <div class="card-header text-dark " style="background-color: #273c42">
+      <span class="ml-5 ml-5 text-light" >{{project.name}} details </span>
+    </div>
+  </div>
+  <div class="row h3">
+      <div class="col-sm-1"></div>
+      <div class="col-sm-1">Name:</div>
+      <div class="col-sm-8">{{project.name}} {{checkStatusProject()}}</div>
+      <div class="col-sm-2"><span class="btn btn-danger btn-lg">{{statusProject}}</span></div>
+  </div>
+
+  <div class="row h3">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-1">Size:</div>
+    <div class="col-sm-10">{{project.size}}</div>
+  </div>
+
+  <div class="row h3 ">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-2">Description:</div>
+    <div class="col-sm-7 h4" type="text" max="25" id="hoverDescription" placement="bottom" ngbPopover="{{project.description}}" triggers="mouseenter:mouseleave" popoverTitle="Description">
+          {{project.description}}
+        </div>
+    <div class="col-sm-2"></div>
+  </div>
+
+  <div class="row h3">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-1">Phases:</div>
+
+    <div class="col-sm-10">
+        <div class=" p-2" *ngFor="let phase of project.phasesDtos" >
+          <div class="row ">
+            <div class="col-sm-10">
+              {{phase.name}} {{checkStatusPhase(phase)}}
+              <span (click)="clicked(phase)" onmouseover="" style="cursor: pointer;" placement="bottom" ngbPopover="{{phase.description}}"  triggers="mouseenter:mouseleave" popoverTitle="Description">
+                  <i class="fa fa-plus-square" *ngIf="!getShowState(phase)"></i>
+                  <i class="fa fa-minus-square" *ngIf="getShowState(phase)"></i>
+              </span>
+            </div>
+
+            <div class="col-sm-2 " >
+                  <button class="btn btn-primary btn-lg" >{{statusPhase.get(phase.id)}}  </button>
+            </div>
+          </div>
+
+        <div class="ml-4 m-4" *ngIf="getShowState(phase)" >
+          <div class="m-6 p-2" *ngFor="let template of getTemplateByPhaseId(phase.id)" >
+            <div class="row h4">
+               <div class="col-sm-3"  placement="bottom" ngbPopover="{{template.description}}"  triggers="mouseenter:mouseleave" popoverTitle="Description">{{template.name}}</div>
+               <div class="col-sm-5">
+                 <a  target="_blank" rel="noopener" [href]="'http://' + template.url">{{template.url}}</a>
+                 <span  onmouseover="" style="cursor: pointer;" (click)="downloadDocument(template)"> {{template.documentName}} </span>
+               </div>
+              <div class="col-sm-2"></div>
+              <!--<div class="col-sm-2">endDate</div>-->
+
+              <div class="col-sm-2">
+                <div  ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>{{getStatusTemplate(phase.id,template.id)}}</button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                    <button (click)="changeStatusTemplate(phase.id,template.id,'TO_DO')" class="dropdown-item">To Do</button>
+                    <button (click)="changeStatusTemplate(phase.id,template.id,'IN_PROGRESS')" class="dropdown-item">In Progress</button>
+                    <button (click)="changeStatusTemplate(phase.id,template.id,'DONE')" class="dropdown-item">Done</button>
+                    <button (click)="changeStatusTemplate(phase.id,template.id,'TO_REVISE')" class="dropdown-item">To Revise</button>
+                  </div>
+                </div>
+              </div>
+             </div>
+          </div>
+        </div>
+        </div>
+     </div>
+  </div>
+</div>
+
+
+

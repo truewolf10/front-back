@@ -1,0 +1,79 @@
+<div class="p-3">
+<button type="button" class="btn btn-primary bg-2 mb-3 float-right" *ngIf="userRole.toString() =='PROJECT_MANAGER' && userRole.toString() == 'USER' || userRole.toString() == 'ADMIN'" (click)="openModal(template)">Create Template</button>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>-->
+
+<table>
+  <tr class="text-light bg-dark" bgcolor="#273c42">
+    <th>Id</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Document</th>
+    <th></th>
+  </tr>
+  <tr *ngFor="let template of templates; let i = index">
+    <td>{{i}}</td>
+    <td>{{template.name}}</td>
+    <td>
+       <span type="text" max="25" id="hoverDescription" placement="bottom" ngbPopover="{{template.description}}" triggers="mouseenter:mouseleave" popoverTitle="Description">
+          {{template.description}}
+        </span>
+    </td>
+    <td>
+      <span *ngIf="getIsFile(template)" onmouseover="" style="cursor: pointer;" (click)="downloadDocument(template)"> {{template.documentName}} </span>
+      <a *ngIf="!getIsFile(template)" target="_blank" rel="noopener" [href]="'http://' + template.url">{{template.url}}</a>
+    </td>
+    <td>
+    <div *ngIf="userRole.toString() =='PROJECT_MANAGER' && userRole.toString() == 'USER' || userRole.toString() == 'ADMIN'">
+      <button class="btn float-right bg-transparent text-dark " (click)="delete(template)">Delete</button>
+      <button type="button" class="btn float-right bg-transparent text-dark" (click)="openModal(EditForEachTemplate, template)" >Edit</button>
+    </div>
+      <!--Modal-->
+      <ng-template #EditForEachTemplate>
+
+        <div class="modal-header bg-2 ">
+          <h4 class="modal-title pull-left">Edit the template</h4>
+          <button type="button" class="close pull-right text-light" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body bg-1">
+          <input class="input-1 text-dark textBoxModal" [(ngModel)]="template.name"  type="text"  >
+          <br>
+          <textarea rows="3px" cols="55px"  [(ngModel)] = "template.description" class = "input-1" placeholder="Enter the description: " type="text" required></textarea>
+          <br>
+          <input class="input-1 text-dark textBoxModal" [(ngModel)]="template.url"  type="text"  >
+          <br>
+          <input class="input-1 text-dark textBoxModal" type="file" ng2FileSelect [uploader] = "uploader">
+          <br>
+          <button class="btn-1 btn btn-success bg-2" (click)="update(template)" >Edit</button>
+        </div>
+      </ng-template>
+    </td>
+  </tr>
+</table>
+
+<div class="d-flex ">
+  <div class="ml-3">
+    <ng-template #template>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Create a template</h4>
+        <button type="button" class="close pull-right text-light" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body bg-1">
+        <input class="input-1 textBoxModal" [(ngModel)]="name" type="text" placeholder="name">
+        <br>
+        <textarea rows="3px" cols="55px"  [(ngModel)] = "descriptionTemplate" class = "input-1" placeholder="Enter the description: " type="text" required></textarea>
+        <br>
+        <input class="input-1 textBoxModal" [(ngModel)]="url" type="text" placeholder="url">
+        <br>
+        <input class="input-1 text-dark textBoxModal" type="file" ng2FileSelect [uploader]="uploader">
+        <br>
+        <button class="btn-1 btn btn-success bg-2" (click)="add()">Create</button>
+      </div>
+    </ng-template>
+  </div>
+</div>
+</div>

@@ -1,0 +1,62 @@
+<div class="p-3">
+  <table>
+    <tr class="text-light bg-dark" bgcolor="#273c42">
+      <th>Nr.</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>email</th>
+      <th>Business Unit</th>
+      <th>User Role</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let user of users; let i = index">
+      <td>{{i}}</td>
+      <td>{{user.firstName}}</td>
+      <td>{{user.lastName}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.businessUnit}}</td>
+      <td>{{user.userRole}}</td>
+      <td>
+        <div *ngIf="userRole.toString() =='PROJECT_MANAGER' && userRole.toString() == 'USER' || userRole.toString() == 'ADMIN'">
+          <button class="btn float-right bg-transparent text-dark " (click)="delete(user)">Delete</button>
+          <button type="button" class="btn float-right bg-transparent text-dark" (click)="openModal(EditForEachTemplate,user)" >Edit</button>
+        </div>
+        <!--Modal-->
+        <ng-template #EditForEachTemplate >
+          <div class="modal-header bg-2 ">
+            <h4 class="modal-title pull-left">Edit user: {{user.firstName}} {{user.lastName}}</h4>
+            <button type="button" class="close pull-right text-light" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body bg-1" >
+            <input class="input-1 text-dark" [(ngModel)]="user.firstName"  type="text"  >
+            <br>
+            <input class="input-1 text-dark" [(ngModel)]="user.lastName"  type="text"  >
+            <br>
+            <input class="input-1 text-dark" [(ngModel)]="user.email"  type="text"  >
+            <br>
+
+            <h5 class="mt-3 text-dark">Business Unit:</h5>
+            <fieldset id="UnitRadioBox">
+            <div class="ml-3 text-dark" *ngFor="let unit of units; let i = index">
+              <mat-radio-button name="UnitRadioBox" color="primary" [checked]="checkUnit(unit,user.businessUnit)" (change)="selectCheckboxUnits(unit)">{{unit}}</mat-radio-button>
+              <br>
+            </div>
+            </fieldset>
+
+            <h5 class="mt-3 text-dark">User role:</h5>
+            <fieldset id="UnitRoleBox">
+            <div  class="ml-3 text-dark" *ngFor="let role of roles; let i = index">
+              <mat-radio-button name="UnitRoleBox" color="primary" [checked]="checkRole(role,user.userRole)" (change)="selectCheckboxRole(role)">{{role}}</mat-radio-button>
+              <br>
+            </div>
+            </fieldset>
+            <button class="btn-1 btn btn-success bg-2"(click)="update(user)" >Edit</button>
+          </div>
+        </ng-template>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,22 @@
+.margineUp{
+  margin-top: 20px;
+}
+.bg-1{
+  background-color: #DCDCDC; /* Dark Blue */
+  color: #ffffff;
+}
+
+.bg-2{
+  background-color: #273c42; /* Grey */
+  color: #ffffff;
+}
+
+#hoverDescription{
+  display:block;
+  text-overflow: ellipsis;
+  width: 600px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+
